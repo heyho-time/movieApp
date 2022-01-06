@@ -1,10 +1,10 @@
 import React from "react";
 import { View, Text } from "react-native";
 
-const Tv = () => (
+const TvScreen = () => (
   <View>
     <Text>Tv</Text>
   </View>
 );
 
-export default Tv;
+export default TvScreen;
