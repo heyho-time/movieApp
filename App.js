@@ -10,6 +10,9 @@ import Root from "./navigation/Root";
 import { ThemeProvider } from "styled-components/native";
 import { darkTheme, lightTheme } from "./styled";
 import { useColorScheme } from "react-native";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+
+const queryClient = new QueryClient();
 
 export default function App() {
   const [assets] = useAssets([require("./berry.jpeg")]);
@@ -20,12 +23,14 @@ export default function App() {
     return <AppLoading />;
   }
   return (
-    <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
-      <NavigationContainer>
-        <Root />
-        {/* <Tabs /> */}
-        {/* <Stack /> */}
-      </NavigationContainer>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+        <NavigationContainer>
+          <Root />
+          {/* <Tabs /> */}
+          {/* <Stack /> */}
+        </NavigationContainer>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }

@@ -1,133 +1,161 @@
 import React, { useState } from "react";
 import styled from "styled-components/native";
-import { Dimensions, ActivityIndicator, ScrollView } from "react-native";
+import {
+  Dimensions,
+  ActivityIndicator,
+  RefreshControl,
+  FlatList,
+  View,
+  Text,
+} from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import Swiper from "react-native-swiper";
 import { useEffect } from "react";
 import Slide from "../components/Slide";
-import Poster from "../components/Poster";
-
-const API_KEY = "d7212f491766d49858f9380583cb30bd";
+import HMedia from "../components/HMedia";
+import VMedia from "../components/VMedia";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import { moviesApi } from "../api";
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
+const movieKeyExtractor = (item) => item.id + "";
+
 const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
-  const [loading, setLoading] = useState(true);
-  const [nowPlaying, setNowPlaying] = useState([]);
-  const [upcoming, setUpcoming] = useState([]);
-  const [trending, setTrending] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+  const { isLoading: nowPlayingLoading, data: nowPlayingData } = useQuery(
+    "nowPlaying",
+    moviesApi.nowPlaying
+  );
+  const { isLoading: upcomingLoading, data: upcomingData } = useQuery(
+    "upcoming",
+    moviesApi.getUpcoming
+  );
+  const { isLoading: trendingLoading, data: trendingData } = useQuery(
+    "trending",
+    moviesApi.getTrending
+  );
 
-  const getTrending = async () => {
-    const { results } = await (
-      await fetch(
-        `https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}`
-      )
-    ).json();
-    setTrending(results);
-  };
+  // 기존 fetch 방식 @!@!@!@!@!@!@!@!@!@!
 
-  const getUpcoming = async () => {
-    const { results } = await (
-      await fetch(
-        `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1`
-      )
-    ).json();
-    setUpcoming(results);
-  };
+  // const [loading, setLoading] = useState(true);
+  // const [nowPlaying, setNowPlaying] = useState([]);
+  // const [upcoming, setUpcoming] = useState([]);
+  // const [trending, setTrending] = useState([]);
 
-  const getNowPlaying = async () => {
-    const { results } = await (
-      await fetch(
-        `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1&region=KR`
-      )
-    ).json();
+  // const getTrending = async () => {
+  //   const { results } = await (
+  //     await fetch(
+  //       `https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}`
+  //     )
+  //   ).json();
+  //   setTrending(results);
+  // };
 
-    setNowPlaying(results);
-  };
+  // const getUpcoming = async () => {
+  //   const { results } = await (
+  //     await fetch(
+  //       `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1`
+  //     )
+  //   ).json();
+  //   setUpcoming(results);
+  // };
 
-  const getData = async () => {
-    await Promise.all([getTrending(), getUpcoming(), getNowPlaying()]);
-    setLoading(false);
-  };
+  // const getNowPlaying = async () => {
+  //   const { results } = await (
+  //     await fetch(
+  //       `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1&region=KR`
+  //     )
+  //   ).json();
 
-  useEffect(() => {
-    getData();
-  }, []);
+  //   setNowPlaying(results);
+  // };
+
+  // const getData = async () => {
+  //   await Promise.all([getTrending(), getUpcoming(), getNowPlaying()]);
+  //   setLoading(false);
+  // };
+
+  // useEffect(() => {
+  //   getData();
+  // }, []);
+
+  const onRefresh = async () => {};
+
+  const renderVMedia = ({ item }) => (
+    <VMedia
+      posterPath={item.poster_path}
+      originalTitle={item.original_title}
+      voteAverage={item.vote_average}
+    />
+  );
+
+  const renderHMedia = ({ item }) => (
+    <HMedia
+      posterPath={item.poster_path}
+      originalTitle={item.original_title}
+      overview={item.overview}
+      releaseDate={item.release_date}
+    />
+  );
+
+  const loading = nowPlayingLoading || upcomingLoading || trendingLoading;
 
   return loading ? (
     <Loader>
       <ActivityIndicator />
     </Loader>
   ) : (
-    <Container>
-      <Swiper
-        loop
-        horizontal
-        autoplay={true}
-        showsButtons={false}
-        showsPagination={false}
-        containerStyle={{
-          marginBottom: 30,
-          width: "100%",
-          height: SCREEN_HEIGHT / 4,
-        }}
-      >
-        {nowPlaying.map((movie) => (
-          <Slide
-            key={movie.id}
-            backdrop_path={movie.backdrop_path}
-            poster_path={movie.poster_path}
-            original_title={movie.original_title}
-            vote_average={movie.vote_average}
-            overview={movie.overview}
-          />
-        ))}
-      </Swiper>
-      <ListContainer>
-        <ListTitle>Trending Movies</ListTitle>
-        <TrendingScroll
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ paddingLeft: 30 }}
-        >
-          {trending.map((movie) => (
-            <Movie key={movie.id}>
-              <Poster path={movie.poster_path} />
-              <Title>
-                {movie.original_title.slice(0, 13)}
-                {movie.original_title.length > 13 ? "..." : null}
-              </Title>
-              {movie.vote_average > 0 ? (
-                <Votes>⭐ {movie.vote_average}/10</Votes>
-              ) : (
-                `Coming soon`
-              )}
-            </Movie>
-          ))}
-        </TrendingScroll>
-      </ListContainer>
-      <ComingSoon>Coming soon</ComingSoon>
-      {upcoming.map((movie) => (
-        <HMovie key={movie.id}>
-          <Poster path={movie.poster_path} />
-          <HColumn>
-            <Title>{movie.original_title}</Title>
-            <Release>
-              {new Date(movie.release_date).toLocaleDateString("ko")} 개봉
-            </Release>
-            <OverView>
-              {movie.overview !== "" && movie.overview.length > 13
-                ? `${movie.overview.slice(0, 140)}...`
-                : movie.overview}
-            </OverView>
-          </HColumn>
-        </HMovie>
-      ))}
-    </Container>
+    <FlatList
+      onRefresh={onRefresh}
+      refreshing={refreshing}
+      ListHeaderComponent={
+        <>
+          <Swiper
+            loop
+            horizontal
+            autoplay={true}
+            showsButtons={false}
+            showsPagination={false}
+            containerStyle={{
+              marginBottom: 30,
+              width: "100%",
+              height: SCREEN_HEIGHT / 4,
+            }}
+          >
+            {nowPlayingData.results.map((movie) => (
+              <Slide
+                key={movie.id}
+                backdrop_path={movie.backdrop_path}
+                poster_path={movie.poster_path}
+                original_title={movie.original_title}
+                vote_average={movie.vote_average}
+                overview={movie.overview}
+              />
+            ))}
+          </Swiper>
+          <ListContainer>
+            <ListTitle>Trending Movies</ListTitle>
+            <TrendingScroll
+              data={trendingData.results}
+              horizontal
+              keyExtractor={movieKeyExtractor}
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ paddingHorizontal: 30 }}
+              ItemSeparatorComponent={VSeparator}
+              renderItem={renderVMedia}
+            />
+          </ListContainer>
+          <ComingSoon>Coming soon</ComingSoon>
+        </>
+      }
+      data={upcomingData.results}
+      keyExtractor={movieKeyExtractor}
+      ItemSeparatorComponent={HSeparator}
+      renderItem={renderHMedia}
+    />
   );
 };
-
-const Container = styled.ScrollView``;
 
 const Loader = styled.View`
   flex: 1;
@@ -147,12 +175,7 @@ const ListContainer = styled.View`
 `;
 
 const Movie = styled.View`
-  margin-right: 30px;
   align-items: center;
-`;
-
-const TrendingScroll = styled.ScrollView`
-  margin-top: 20px;
 `;
 
 const Title = styled.Text`
@@ -190,6 +213,18 @@ const Release = styled.Text`
 
 const ComingSoon = styled(ListTitle)`
   margin-bottom: 30px;
+`;
+
+const TrendingScroll = styled.FlatList`
+  margin-top: 20px;
+`;
+
+const VSeparator = styled.View`
+  width: 20px;
+`;
+
+const HSeparator = styled.View`
+  height: 20px;
 `;
 
 export default Movies;
