@@ -15,4 +15,4 @@ expo install expo-web-browser
 Yarn start,
 Yarn run iOS
 
-<img width="50%" src="https://user-images.githubusercontent.com/75261551/149363607-e040a199-4506-47fc-a9f3-301cc7784a94.gif" />
+<img width="20%" src="https://user-images.githubusercontent.com/75261551/149363607-e040a199-4506-47fc-a9f3-301cc7784a94.gif" />
