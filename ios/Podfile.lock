@@ -7,17 +7,15 @@ PODS:
     - ExpoModulesCore
   - EXConstants (13.0.0):
     - ExpoModulesCore
-  - EXErrorRecovery (3.0.4):
-    - ExpoModulesCore
   - EXFileSystem (13.1.0):
     - ExpoModulesCore
   - EXFont (10.0.4):
     - ExpoModulesCore
   - EXKeepAwake (10.0.1):
     - ExpoModulesCore
-  - EXLinearGradient (9.2.0):
-    - UMCore
   - Expo (44.0.4):
+    - ExpoModulesCore
+  - ExpoLinearGradient (11.0.0):
     - ExpoModulesCore
   - ExpoModulesCore (0.6.4):
     - React-Core
@@ -25,6 +23,8 @@ PODS:
   - EXSplashScreen (0.14.1):
     - ExpoModulesCore
     - React-Core
+  - EXWebBrowser (10.1.0):
+    - ExpoModulesCore
   - FBLazyVector (0.64.3)
   - FBReactNativeSpec (0.64.3):
     - RCT-Folly (= 2020.01.13.00)
@@ -332,17 +332,17 @@ PODS:
 
 DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
-  - EXApplication (from `../node_modules/expo-application/ios`)
-  - EXBlur (from `../node_modules/expo-blur/ios`)
-  - EXConstants (from `../node_modules/expo-constants/ios`)
-  - EXErrorRecovery (from `../node_modules/expo-error-recovery/ios`)
-  - EXFileSystem (from `../node_modules/expo-file-system/ios`)
-  - EXFont (from `../node_modules/expo-font/ios`)
-  - EXKeepAwake (from `../node_modules/expo-keep-awake/ios`)
-  - EXLinearGradient (from `../node_modules/expo-linear-gradient/ios`)
-  - Expo (from `../node_modules/expo/ios`)
-  - ExpoModulesCore (from `../node_modules/expo-modules-core/ios`)
-  - EXSplashScreen (from `../node_modules/expo-splash-screen/ios`)
+  - "EXApplication (from `../../../../../바탕화면/project/개인작업/movieApp/node_modules/expo-application/ios`)"
+  - "EXBlur (from `../../../../../바탕화면/project/개인작업/movieApp/node_modules/expo-blur/ios`)"
+  - "EXConstants (from `../../../../../바탕화면/project/개인작업/movieApp/node_modules/expo-constants/ios`)"
+  - "EXFileSystem (from `../../../../../바탕화면/project/개인작업/movieApp/node_modules/expo-file-system/ios`)"
+  - "EXFont (from `../../../../../바탕화면/project/개인작업/movieApp/node_modules/expo-font/ios`)"
+  - "EXKeepAwake (from `../../../../../바탕화면/project/개인작업/movieApp/node_modules/expo-keep-awake/ios`)"
+  - "Expo (from `../../../../../바탕화면/project/개인작업/movieApp/node_modules/expo/ios`)"
+  - "ExpoLinearGradient (from `../../../../../바탕화면/project/개인작업/movieApp/node_modules/expo-linear-gradient/ios`)"
+  - "ExpoModulesCore (from `../../../../../바탕화면/project/개인작업/movieApp/node_modules/expo-modules-core/ios`)"
+  - "EXSplashScreen (from `../../../../../바탕화면/project/개인작업/movieApp/node_modules/expo-splash-screen/ios`)"
+  - "EXWebBrowser (from `../../../../../바탕화면/project/개인작업/movieApp/node_modules/expo-web-browser/ios`)"
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
@@ -386,27 +386,27 @@ EXTERNAL SOURCES:
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   EXApplication:
-    :path: "../node_modules/expo-application/ios"
+    :path: "../../../../../바탕화면/project/개인작업/movieApp/node_modules/expo-application/ios"
   EXBlur:
-    :path: "../node_modules/expo-blur/ios"
+    :path: "../../../../../바탕화면/project/개인작업/movieApp/node_modules/expo-blur/ios"
   EXConstants:
-    :path: "../node_modules/expo-constants/ios"
-  EXErrorRecovery:
-    :path: "../node_modules/expo-error-recovery/ios"
+    :path: "../../../../../바탕화면/project/개인작업/movieApp/node_modules/expo-constants/ios"
   EXFileSystem:
-    :path: "../node_modules/expo-file-system/ios"
+    :path: "../../../../../바탕화면/project/개인작업/movieApp/node_modules/expo-file-system/ios"
   EXFont:
-    :path: "../node_modules/expo-font/ios"
+    :path: "../../../../../바탕화면/project/개인작업/movieApp/node_modules/expo-font/ios"
   EXKeepAwake:
-    :path: "../node_modules/expo-keep-awake/ios"
-  EXLinearGradient:
-    :path: "../node_modules/expo-linear-gradient/ios"
+    :path: "../../../../../바탕화면/project/개인작업/movieApp/node_modules/expo-keep-awake/ios"
   Expo:
-    :path: "../node_modules/expo/ios"
+    :path: "../../../../../바탕화면/project/개인작업/movieApp/node_modules/expo/ios"
+  ExpoLinearGradient:
+    :path: "../../../../../바탕화면/project/개인작업/movieApp/node_modules/expo-linear-gradient/ios"
   ExpoModulesCore:
-    :path: "../node_modules/expo-modules-core/ios"
+    :path: "../../../../../바탕화면/project/개인작업/movieApp/node_modules/expo-modules-core/ios"
   EXSplashScreen:
-    :path: "../node_modules/expo-splash-screen/ios"
+    :path: "../../../../../바탕화면/project/개인작업/movieApp/node_modules/expo-splash-screen/ios"
+  EXWebBrowser:
+    :path: "../../../../../바탕화면/project/개인작업/movieApp/node_modules/expo-web-browser/ios"
   FBLazyVector:
     :path: "../node_modules/react-native/Libraries/FBLazyVector"
   FBReactNativeSpec:
@@ -478,16 +478,16 @@ SPEC CHECKSUMS:
   EXApplication: bdc8dc27713235565da1029a34385229f31b8e08
   EXBlur: 82055865de17cf2cf797ff064c50fb59fcbe703f
   EXConstants: 5d18484e38e8eacef7695a82214b6ac90133dedf
-  EXErrorRecovery: deea88a01d38f8b1c1181b4e1d179b0ba0e4bb5b
   EXFileSystem: 7d1309ba6b38b82ef7fc9e80174de3f9184ac8b4
   EXFont: 1fb13af43dc517c01c0ff21a6e32f9f9bf2ea602
   EXKeepAwake: b571c2ad8323b2fced6e907766e2549f75119471
-  EXLinearGradient: f9ea3259f096b27008860ca50764184225dc71c9
   Expo: d9b8b5e49c200471fc473a652a84fe30dee73027
+  ExpoLinearGradient: a7f1672e1727fedc4280d56c27606f8e195b9fcc
   ExpoModulesCore: 64abda7af7cf659d2fa092934e29c6f4ea7e849f
   EXSplashScreen: 7872675b95bb07c25f922b3d3dfae70c76fb5a00
+  EXWebBrowser: 37388663fa51cbfc883de2244931a5182d948e5f
   FBLazyVector: c71c5917ec0ad2de41d5d06a5855f6d5eda06971
-  FBReactNativeSpec: 2b7604dd91e84925564f1c2cea9a19e22f55b114
+  FBReactNativeSpec: 52dc459c3e016a3b861d8eba077b35d88a3a4f7f
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
   RCT-Folly: ec7a233ccc97cc556cf7237f0db1ff65b986f27c
   RCTRequired: d34bf57e17cb6e3b2681f4809b13843c021feb6c
