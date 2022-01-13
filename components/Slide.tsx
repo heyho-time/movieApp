@@ -1,51 +1,16 @@
-import React from "react";
-import { View, Text, StyleSheet, useColorScheme } from "react-native";
-import styled from "styled-components/native";
+import { useNavigation } from "@react-navigation/native";
 import { BlurView } from "expo-blur";
+import React from "react";
+import {
+  StyleSheet,
+  TouchableWithoutFeedback,
+  useColorScheme,
+  View,
+} from "react-native";
+import styled from "styled-components/native";
+import { Movie } from "../api";
 import { makeImgPath } from "../utils";
 import Poster from "./Poster";
-
-interface SlideProps {
-  backdrop_path: string;
-  poster_path: string;
-  original_title: string;
-  vote_average: number;
-  overview: string;
-}
-
-const Slide: React.FC<SlideProps> = ({
-  backdrop_path,
-  poster_path,
-  original_title,
-  vote_average,
-  overview,
-}) => {
-  const isDark = useColorScheme() === "dark";
-  return (
-    <View style={{ flex: 1 }}>
-      <BgImg
-        style={StyleSheet.absoluteFill}
-        source={{ uri: makeImgPath(backdrop_path) }}
-      />
-      <BlurView
-        tint={isDark ? "dark" : "light"}
-        style={StyleSheet.absoluteFill}
-        intensity={80}
-      >
-        <Wrapper>
-          <Poster path={poster_path} />
-          <Column>
-            <Title isDark={isDark}>{original_title}</Title>
-            {vote_average > 0 && (
-              <Vote isDark={isDark}>⭐ {vote_average}/10</Vote>
-            )}
-            <OverView isDark={isDark}>{overview.slice(0, 90)}...</OverView>
-          </Column>
-        </Wrapper>
-      </BlurView>
-    </View>
-  );
-};
 
 const BgImg = styled.Image``;
 
@@ -57,22 +22,77 @@ const Title = styled.Text<{ isDark: boolean }>`
 const Wrapper = styled.View`
   flex-direction: row;
   height: 100%;
-  justify-content: center;
+  width: 90%;
+  margin: 0 auto;
+  justify-content: space-around;
   align-items: center;
 `;
-
 const Column = styled.View`
-  width: 50%;
-  margin-left: 15px;
+  width: 60%;
 `;
-
-const OverView = styled.Text<{ isDark: boolean }>`
+const Overview = styled.Text<{ isDark: boolean }>`
   margin-top: 10px;
   color: ${(props) =>
-    props.isDark ? "rgba(255, 255, 255, 0.6)" : "rgba(0,0,0,0.6)"};
+    props.isDark ? "rgba(255, 255, 255, 0.8)" : "rgba(0, 0, 0, 0.8)"};
 `;
-const Vote = styled(OverView)`
-  margin-top: 10px;
+const Votes = styled(Overview)`
+  font-size: 12px;
 `;
+
+interface SlideProps {
+  backdropPath: string;
+  posterPath: string;
+  originalTitle: string;
+  voteAverage: number;
+  overview: string;
+  fullData: Movie;
+}
+
+const Slide: React.FC<SlideProps> = ({
+  backdropPath,
+  posterPath,
+  originalTitle,
+  voteAverage,
+  overview,
+  fullData,
+}) => {
+  const isDark = useColorScheme() === "dark";
+  const navigation = useNavigation();
+  const goToDetail = () => {
+    //@ts-ignore
+    navigation.navigate("Stack", {
+      screen: "Detail",
+      params: {
+        ...fullData,
+      },
+    });
+  };
+  return (
+    <TouchableWithoutFeedback onPress={goToDetail}>
+      <View style={{ flex: 1 }}>
+        <BgImg
+          style={StyleSheet.absoluteFill}
+          source={{ uri: makeImgPath(backdropPath) }}
+        />
+        <BlurView
+          tint={isDark ? "dark" : "light"}
+          intensity={85}
+          style={StyleSheet.absoluteFill}
+        >
+          <Wrapper>
+            <Poster path={posterPath} />
+            <Column>
+              <Title isDark={isDark}>{originalTitle}</Title>
+              {voteAverage > 0 ? (
+                <Votes isDark={isDark}>⭐️ {voteAverage}/10</Votes>
+              ) : null}
+              <Overview isDark={isDark}>{overview.slice(0, 100)}...</Overview>
+            </Column>
+          </Wrapper>
+        </BlurView>
+      </View>
+    </TouchableWithoutFeedback>
+  );
+};
 
 export default Slide;

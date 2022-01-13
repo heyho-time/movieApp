@@ -1,17 +1,16 @@
+import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import MovieScreen from "../screens/Movie";
-import TvScreen from "../screens/Tv";
-import SearchScreen from "../screens/Search";
+import Movies from "../screens/Movies";
+import Tv from "../screens/Tv";
+import Search from "../screens/Search";
 import { useColorScheme } from "react-native";
-import { YELLOW_COLOR, BLACK_COLOR } from "../colors";
+import { BLACK_COLOR, DARK_GREY, LIGHT_GREY, YELLOW_COLOR } from "../colors";
 import { Ionicons } from "@expo/vector-icons";
-import Stack from "./Stack";
 
 const Tab = createBottomTabNavigator();
 
 const Tabs = () => {
   const isDark = useColorScheme() === "dark";
-
   return (
     <Tab.Navigator
       sceneContainerStyle={{
@@ -22,17 +21,23 @@ const Tabs = () => {
           backgroundColor: isDark ? BLACK_COLOR : "white",
         },
         tabBarActiveTintColor: isDark ? YELLOW_COLOR : BLACK_COLOR,
+        tabBarInactiveTintColor: isDark ? DARK_GREY : LIGHT_GREY,
         headerStyle: {
-          backgroundColor: isDark ? "#1e272e" : "white",
+          backgroundColor: isDark ? BLACK_COLOR : "white",
         },
         headerTitleStyle: {
           color: isDark ? "white" : BLACK_COLOR,
         },
+        tabBarLabelStyle: {
+          marginTop: -5,
+          fontSize: 10,
+          fontWeight: "600",
+        },
       }}
     >
       <Tab.Screen
-        name="Movie"
-        component={MovieScreen}
+        name="Movies"
+        component={Movies}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons name={"film-outline"} color={color} size={size} />
@@ -40,8 +45,8 @@ const Tabs = () => {
         }}
       />
       <Tab.Screen
-        name="Tv"
-        component={TvScreen}
+        name="TV"
+        component={Tv}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="tv-outline" color={color} size={size} />
@@ -50,10 +55,10 @@ const Tabs = () => {
       />
       <Tab.Screen
         name="Search"
-        component={SearchScreen}
+        component={Search}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="search-outline" color={color} size={size} />
+            <Ionicons name={"search-outline"} color={color} size={size} />
           ),
         }}
       />

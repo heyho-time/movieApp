@@ -11,5 +11,4 @@ const Root = () => (
     <Nav.Screen name="Stack" component={Stack} />
   </Nav.Navigator>
 );
-
 export default Root;
